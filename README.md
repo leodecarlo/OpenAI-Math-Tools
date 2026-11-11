@@ -20,9 +20,9 @@ You can ask your chat to use the skills while delegating a proof or review to So
 
 > Use General Math Helper and Sol_rev, and delegate this proof or review to Sol-Pro. Coordinate the independent checks required by the skills.
 
-The coordinating chat forwards the selected skill text, referenced standards and relevant review procedures, exact hypotheses, proof version, and accessible sources to Sol-Pro. A proof already in the chat can be forwarded as text; a separate file is optional. API calls do not inherit the whole conversation, local files, or other plugins.
+Sol-Pro can use instructions from selected skills and plugins. The chat forwards those instructions, relevant references, exact hypotheses, proof version, and accessible sources along with the task. A proof already in the chat can be forwarded as text; a separate file is optional.
 
-The host must create and coordinate the independent reviewers. Passing Sol_rev to one Sol-Pro call does not create a review team. When combining the skills, retain General Math Helper's additional required roles and report the model and reasoning settings requested for each agent.
+The chat coordinates the review roles required by the selected skills and reports the model and reasoning settings requested for each agent.
 
 ## Configure Sol-Pro
 

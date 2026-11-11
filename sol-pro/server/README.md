@@ -19,9 +19,9 @@ Set `OPENAI_API_KEY` in private runtime settings. Each deployment uses its own A
 | `sol_pro_get` | Retrieve a response by ID, with text, status, usage, estimated cost, and pending actions. |
 | `sol_pro_continue` | Return observed browser or patch outputs, or MCP approval decisions, and continue. |
 
-The API request does not inherit the chat's skills, files, or plugins. The host reads and forwards selected skill instructions and referenced material. The X plugin, for example, may supply a skill and reference PDFs whose relevant content can be passed as context.
+Sol-Pro can use instructions from selected skills and plugins. The chat passes instructions in `skills` and relevant material in `context`. The X plugin, for example, may supply a skill and reference PDFs whose relevant content can be passed as context.
 
-The server does not create independent reviewer agents. The calling host must orchestrate Sol_rev and any verification team required by General Math Helper.
+The chat coordinates the review roles required by the selected skills.
 
 ## Model tools
 
