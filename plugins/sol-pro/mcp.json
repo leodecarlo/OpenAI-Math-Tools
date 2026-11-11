@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "sol-pro": {
+      "type": "streamable-http",
+      "url": "https://your-sol-pro-server.example/mcp"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+interface:
+  display_name: "General Math Helper"
+  short_description: "Proofs, algorithms, and scientific programming"
+  default_prompt: "Use $general-math-helper for this mathematical proof, research question, or scientific programming task, with explicit assumptions, checkable reasoning, and appropriate validation."
+  icon_small: "assets/icon.svg"
+  icon_large: "assets/icon.svg"
+policy:
+  allow_implicit_invocation: true

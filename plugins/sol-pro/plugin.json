@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sol-pro",
+  "version": "1.0.1",
+  "description": "Call GPT-6.1 Sol in Pro mode with max reasoning effort.",
+  "author": {
+    "name": "Leonardo De Carlo"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/leodecarlo/OpenAI-Math-Tools",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Sol-Pro",
+      "shortDescription": "Sol Pro research and review",
+        "longDescription": "Pass selected skills, sources, and mathematical work to GPT-6.1 Sol Pro/max.",
+        "developerName": "Leonardo De Carlo",
+        "category": "Other",
+        "capabilities": []
+      }
+    }
+  }
+}
