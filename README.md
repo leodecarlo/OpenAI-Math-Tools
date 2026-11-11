@@ -16,9 +16,9 @@ Computational evidence and reviewer agreement do not establish a theorem. Report
 
 Copy the two directories under `skills/` into your Codex skills directory (`~/.codex/skills/`). Invoke them with `$general-math-helper` and `$sol-rev`.
 
-For example, ask your chat:
+You can ask your chat to use the skills while delegating a proof or review to Sol-Pro:
 
-> Use General Math Helper and Sol_rev to review the proof above. Ask Sol-Pro to check the calculations and examine the argument.
+> Use General Math Helper and Sol_rev, and delegate this proof or review to Sol-Pro. Coordinate the independent checks required by the skills.
 
 The coordinating chat forwards the selected skill text, referenced standards and relevant review procedures, exact hypotheses, proof version, and accessible sources to Sol-Pro. A proof already in the chat can be forwarded as text; a separate file is optional. API calls do not inherit the whole conversation, local files, or other plugins.
 
