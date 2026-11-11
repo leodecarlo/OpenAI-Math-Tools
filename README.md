@@ -26,8 +26,8 @@ The chat coordinates the review roles required by the selected skills and report
 
 ## Configure Sol-Pro
 
-Use your own deployment, authentication, and API billing. The plugin folder is a connection template; replace its example endpoint. The exported server was built for Sites and depends on its trusted identity gateway. See the [setup notes](sol-pro/server/README.md).
+To use Sol-Pro, create your own OpenAI API key and set up billing for your API account. Configure your own Sol-Pro service with the key and connect the plugin to it. See the [setup notes](sol-pro/server/README.md) for details.
 
-The host executes computer and patch calls and returns actual results. Remote MCP tools require configured connections. Hosted shell requires an explicit user request. Responses include IDs and, where available, estimated model costs; tool and container charges are separate.
+Sol-Pro reports response IDs and, when available, estimated model costs. Tool and container charges may be additional.
 
 MIT licensed. Skill instructions are in their respective `SKILL.md` files.

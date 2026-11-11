@@ -25,7 +25,7 @@ The chat coordinates the review roles required by the selected skills.
 
 ## Model tools
 
-Web search, Code Interpreter, image generation, computer use, and apply patch are requested by default. The host executes computer and patch calls and returns actual observations. File search needs vector-store IDs; Code Interpreter file inputs need API file IDs.
+Web search, Code Interpreter, image generation, computer use, and apply patch are requested by default. For computer or file-editing tasks, the calling chat or application carries out the requested actions and sends the results back to Sol-Pro. File search needs vector-store IDs; Code Interpreter file inputs need API file IDs.
 
 GPT-6.1 Sol supports MCP tools through the Responses API. Configure remote HTTPS servers privately in `SOL_PRO_MCP_SERVERS_JSON`, then select names through `mcp_connections`. Each MCP call requires approval. Existing chat plugin connections are not inherited by the API request.
 
