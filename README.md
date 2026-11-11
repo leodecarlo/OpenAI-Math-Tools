@@ -33,3 +33,13 @@ Sol-Pro can use GPT-6.1 Sol's Responses API tools: web search, file search, imag
 Sol-Pro reports response IDs and, when available, estimated model costs. Tool and container charges may be additional.
 
 MIT licensed. Skill instructions are in their respective `SKILL.md` files.
+
+## Connect your API key
+
+1. Create a key on the [OpenAI API keys page](https://platform.openai.com/api-keys) and enable billing for its API project.
+2. In the private settings of the service hosting Sol-Pro, add a secret named `OPENAI_API_KEY` and paste your key as its value. For Sites, use the Site's runtime environment settings.
+3. Save the setting and redeploy Sol-Pro. The server reads the key automatically; no script changes are needed.
+4. Connect the plugin to your service by replacing the example endpoint in `plugins/sol-pro/mcp.json` with your service's MCP URL.
+5. Ask the chat to check `sol_pro_capabilities`. The result `api_key_configured: true` confirms that a key is present. Then ask Sol-Pro to reply "OK" to test that the key and model access work; this makes a billable API call.
+
+Keep the key in private settings, outside GitHub and the plugin package. Calls from your Sol-Pro service are billed to the API project associated with that key.
