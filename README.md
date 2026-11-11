@@ -36,10 +36,16 @@ MIT licensed. Skill instructions are in their respective `SKILL.md` files.
 
 ## Connect your API key
 
-1. Create a key on the [OpenAI API keys page](https://platform.openai.com/api-keys) and enable billing for its API project.
-2. In the private settings of the service hosting Sol-Pro, add a secret named `OPENAI_API_KEY` and paste your key as its value. For Sites, use the Site's runtime environment settings.
-3. Save the setting and redeploy Sol-Pro. The server reads the key automatically; no script changes are needed.
-4. Connect the plugin to your service by replacing the example endpoint in `plugins/sol-pro/mcp.json` with your service's MCP URL.
-5. Ask the chat to check `sol_pro_capabilities`. The result `api_key_configured: true` confirms that a key is present. Then ask Sol-Pro to reply "OK" to test that the key and model access work; this makes a billable API call.
+Create a key on the [OpenAI API keys page](https://platform.openai.com/api-keys) and enable billing for its API project.
 
-Keep the key in private settings, outside GitHub and the plugin package. Calls from your Sol-Pro service are billed to the API project associated with that key.
+On the server running Sol-Pro, add this private environment variable:
+
+| Name | Value |
+| --- | --- |
+| `OPENAI_API_KEY` | Your API key, stored as a secret |
+
+For Sites, add it in your Sol-Pro Site's runtime environment settings, then redeploy to apply it.
+
+The hosting service passes the key to [the server script](sol-pro/server/worker/index.js) as `env.OPENAI_API_KEY`. The script already reads that value for API calls. You do not need to edit the script or give it a file path.
+
+Keep the key outside GitHub. Calls are billed to the API project associated with the key.
