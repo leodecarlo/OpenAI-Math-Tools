@@ -24,7 +24,7 @@ Sol-Pro can use instructions from selected skills and plugins. The chat forwards
 
 The chat coordinates the review roles required by the selected skills and reports the model and reasoning settings requested for each agent.
 
-## Configure Sol-Pro
+## Configure Sol-Pro and available tools
 
 Sol-Pro uses your own OpenAI API key and API billing. The steps below explain how to connect your key.
 
@@ -34,7 +34,7 @@ Sol-Pro reports response IDs and, when available, estimated model costs. Tool an
 
 MIT licensed. Skill instructions are in their respective `SKILL.md` files.
 
-## Connect your API key
+### Connect your API key
 
 1. Create a key on the [OpenAI API keys page](https://platform.openai.com/api-keys) and enable billing for its API project.
 2. Save the key in a private text file on your computer, for example `sol-pro-key.txt`. The file should contain only the key and stay outside this repository.
