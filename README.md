@@ -26,7 +26,7 @@ The chat coordinates the review roles required by the selected skills and report
 
 ## Configure Sol-Pro
 
-To use Sol-Pro, create your own OpenAI API key and set up billing for your API account. Configure your Sol-Pro service with the key and connect the plugin to it.
+Sol-Pro uses your own OpenAI API key and API billing. The steps below explain how to connect your key.
 
 Sol-Pro can use GPT-6.1 Sol's Responses API tools: web search, file search, image generation, Code Interpreter, computer use, apply patch, skills, MCP, tool search, and hosted shell. File search requires configuration. Remote MCP tools require configured connections. Tool search is enabled when an MCP connection is selected. Hosted shell and native API skills require an explicit shell request.
 
@@ -36,16 +36,12 @@ MIT licensed. Skill instructions are in their respective `SKILL.md` files.
 
 ## Connect your API key
 
-Create a key on the [OpenAI API keys page](https://platform.openai.com/api-keys) and enable billing for its API project.
+1. Create a key on the [OpenAI API keys page](https://platform.openai.com/api-keys) and enable billing for its API project.
+2. Save the key in a private text file on your computer, for example `sol-pro-key.txt`. The file should contain only the key and stay outside this repository.
+3. Open this repository in Codex and send this request, replacing the placeholder with the full path to your file:
 
-On the server running Sol-Pro, add this private environment variable:
+> Set up my copy of Sol-Pro using the OpenAI API key saved in `<full path to sol-pro-key.txt>`. Read the key without displaying it, configure Sol-Pro to use it, and verify the connection with a short API call. Keep the key out of GitHub.
 
-| Name | Value |
-| --- | --- |
-| `OPENAI_API_KEY` | Your API key, stored as a secret |
+Codex handles the setup and supplies the key as `OPENAI_API_KEY`, which Sol-Pro's code already reads. Sol-Pro does not automatically read your text file; Codex must complete the setup before you can use the plugin.
 
-For Sites, add it in your Sol-Pro Site's runtime environment settings, then redeploy to apply it.
-
-The hosting service passes the key to [the server script](sol-pro/server/worker/index.js) as `env.OPENAI_API_KEY`. The script already reads that value for API calls. You do not need to edit the script or give it a file path.
-
-Keep the key outside GitHub. Calls are billed to the API project associated with the key.
+The test and later API calls are billed to the API project associated with your key.
