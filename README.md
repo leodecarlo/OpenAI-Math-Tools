@@ -45,3 +45,16 @@ MIT licensed. Skill instructions are in their respective `SKILL.md` files.
 Codex handles the setup and supplies the key as `OPENAI_API_KEY`, which Sol-Pro's code already reads. Sol-Pro does not automatically read your text file; Codex must complete the setup before you can use the plugin.
 
 The test and later API calls are billed to the API project associated with your key.
+
+## Invoke skills and plugins in chat
+
+Once installed, type `$` for a skill or `@` for a plugin, then select its name from the suggestions:
+
+| Type | Examples |
+| --- | --- |
+| Skill | `$general-math-helper`, `$sol-rev` |
+| Plugin | `@Sol-Pro` |
+
+Add your request after selecting them. You can combine skills and plugins in the same message:
+
+> `$general-math-helper $sol-rev @Sol-Pro` Use these skills and delegate the following proof or review to Sol-Pro: …
