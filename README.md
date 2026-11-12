@@ -13,7 +13,6 @@ Two skills for mathematical work, plus Sol-Pro's plugin.
 
 ## Use them together
 
-Copy the two directories under `skills/` into your Codex skills directory (`~/.codex/skills/`). Invoke them with `$general-math-helper` and `$sol-rev`.
 
 You can ask your chat to use the skills while delegating a proof or review to Sol-Pro:
 
