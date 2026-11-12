@@ -10,7 +10,6 @@ Two skills for mathematical work, plus Sol-Pro's plugin.
 
 **[Sol-Pro](plugins/sol-pro/)** connects a chat to a service requesting GPT-6.1 Sol in Pro mode with max reasoning effort. Its philosophy is explicit delegation: pass the work and instructions, use tools when needed, and record the response IDs and estimated costs. The [server source](sol-pro/server/) shows how calls are made.
 
-Computational evidence and reviewer agreement do not establish a theorem. Report what is proved and what remains uncertain.
 
 ## Use them together
 
