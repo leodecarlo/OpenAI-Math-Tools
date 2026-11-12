@@ -11,7 +11,7 @@ Two skills for mathematical work, plus Sol-Pro's plugin.
 **[Sol-Pro](plugins/sol-pro/)** connects a chat to a service requesting GPT-6.1 Sol in Pro mode with max reasoning effort. Its philosophy is explicit delegation: pass the work and instructions, use tools when needed, and record the response IDs and estimated costs. The [server source](sol-pro/server/) shows how calls are made.
 
 
-## Use them together
+### Use them together
 
 
 You can ask your chat to use the skills while delegating a proof or review to Sol-Pro:
@@ -26,7 +26,7 @@ The chat coordinates the review roles required by the selected skills and report
 
 Sol-Pro uses your own OpenAI API key and API billing. The steps below explain how to connect your key.
 
-Sol-Pro can use GPT-6.1 Sol's Responses API tools: web search, file search, image generation, Code Interpreter, computer use, apply patch, skills, MCP, tool search, and hosted shell. File search requires configuration. Remote MCP tools require configured connections. Tool search is enabled when an MCP connection is selected. Hosted shell and native API skills require an explicit shell request.
+Sol-Pro can use GPT-6.1 Sol's Responses API tools: web search, file search, image generation, Code Interpreter, computer use, apply patch, skills, MCP, tool search, and hosted shell. Remote MCP tools require configured connections. Tool search is enabled when an MCP connection is selected. Hosted shell and native API skills require an explicit shell request.
 
 Sol-Pro reports response IDs and, when available, estimated model costs. Tool and container charges may be additional.
 
