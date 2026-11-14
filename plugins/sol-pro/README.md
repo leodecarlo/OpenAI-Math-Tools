@@ -1,9 +1,13 @@
 # Sol-Pro plugin
 
-This portable package is a connection template for your own Sol-Pro deployment.
+This portable package connects your chat to your own Sol-Pro service. For everyday use, select `@Sol-Pro` and describe the work. See the [main guide](../../README.md) for setup, available tools, and examples.
 
-1. Prepare a compatible authenticated service using the [server source](../../sol-pro/server/).
-2. Replace the example URL in `mcp.json` with your service endpoint and configure the authentication required by your host.
-3. Install the configured package in a host that supports plugins and MCP. For a Sites deployment, generate the connected plugin through Sites.
+Ask explicitly for hosted shell when needed; it replaces Code Interpreter for that task. MCP connections need separate setup.
 
-This public copy includes the cost-reporting skill. Its connection has not been tested against a new deployment. The author's private App binding and service endpoint are omitted.
+To prepare your copy:
+
+1. Set up your private service from the [server source](../../sol-pro/server/).
+2. Replace the example connection address in `mcp.json` with your service address and configure authentication.
+3. Install the configured package. If you use Sites, let Sites create the connected plugin.
+
+The package includes cost reporting. A new deployment still needs its connection checked; this public copy contains no private service address or credentials.

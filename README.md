@@ -26,7 +26,7 @@ The chat coordinates the review roles required by the selected skills and report
 
 Sol-Pro uses your own OpenAI API key and API billing. The steps below explain how to connect your key.
 
-Sol-Pro can use GPT-6.1 Sol's Responses API tools: web search, file search, image generation, Code Interpreter, computer use, apply patch, skills, MCP, tool search, and hosted shell. Remote MCP tools require configured connections. Tool search is enabled when an MCP connection is selected. Hosted shell and native API skills require an explicit shell request.
+Web search, image generation, Code Interpreter, computer use, and apply patch are available by default; the chat handles computer and editing actions. File search needs searchable files. Skills supply instructions. Request hosted shell explicitly; it replaces Code Interpreter and can use native skills. MCP and tool search need separate connection setup.
 
 Sol-Pro reports response IDs and, when available, estimated model costs. Tool and container charges may be additional.
 
