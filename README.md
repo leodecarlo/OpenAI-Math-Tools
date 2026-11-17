@@ -1,6 +1,6 @@
 # OpenAI Math Tools
 
-Two skills for mathematical work, plus Sol-Pro's plugin.
+Two skills for mathematical work, plus Sol_6.1-Pro's plugin.
 
 ## The three tools
 
