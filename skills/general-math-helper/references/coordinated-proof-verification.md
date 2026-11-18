@@ -4,7 +4,8 @@ For a hard or uncertain proof, the Main agent automatically engages at least sev
 
 - One computation checker.
 - One counterexample finder.
-- At least three alternative proof-path explorers, each pursuing a distinct approach.
+- At least two alternative proof-path explorers, each pursuing a distinct approach.
+- A neuro-symbolic verifier, who explores uncertain proof steps and checks selected identities or lemmas with exact symbolic tools. State what each check establishes and under which assumptions.
 - At least two adversarial checkers, each independently examining the proof.
 
 Including the Main agent, this is at least eight distinct agents. Stage agents if concurrent capacity is limited.

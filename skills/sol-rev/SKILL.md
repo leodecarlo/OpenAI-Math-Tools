@@ -1,6 +1,6 @@
 ---
 name: sol-rev
-description: "Coordinate proofs and numerical-method implementation checks with separate GPT-6.1 Sol agents for computational checking and independent review. Numerical-method checks also use a neuro-symbolic verifier."
+description: "Coordinate proofs and numerical-method implementation checks with separate GPT-6.1 Sol agents for computational checking and independent review. Proof reviews also use a neuro-symbolic verifier."
 ---
 
 # Sol_rev
@@ -11,18 +11,18 @@ Apply this coordination layer to the user's mathematical task. Preserve the supp
 
 Use the current chat model as the Main agent, leading the proof or implementation review. Follow the same instructions regardless of its model identity, and disclose that identity.
 
-Delegate to two separate GPT-6.1 Sol agents for proofs and three for numerical-method implementation checks.
+Delegate to three separate GPT-6.1 Sol agents for proofs and two for numerical-method implementation checks.
 
 For proofs:
 
 1. Computational checking: independently rederive important calculations and run appropriate symbolic, exact, or numerical checks. Explain what each check establishes.
 2. Mathematical review: inspect the candidate proof for unsupported steps, hidden assumptions, missing cases, and incorrect theorem applications. Suggest concrete repairs and improvements.
+3. A neuro-symbolic verifier, who explores uncertain proof steps and checks selected identities or lemmas with exact symbolic tools. State what each check establishes and under which assumptions.
 
 For numerical-method implementation checks:
 
 1. **Computational checking:** independently validate calculations and numerical results using appropriate reference solutions, convergence studies, conservation checks, edge cases, and sensitivity to numerical tolerances. Explain what each check establishes.
 2. **Mathematical and implementation review:** inspect the method's assumptions and derivation, verify that the code implements the stated scheme and examine claims about correctness, stability, and convergence. Suggest concrete repairs.
-3. A neuro-symbolic verifier, who explores uncertain proof steps and checks selected identities or lemmas with exact symbolic tools. State what each check establishes and under which assumptions.
 
 Retain any additional verification roles required by the task or project instructions.
 
