@@ -4,7 +4,7 @@ Two skills for mathematical work and a plugin for delegating proof and review ta
 
 ## Why Sol 6.x?
 
-I chose the Sol 6.x series because I’ve found it strong at both developing proofs and spotting errors in mathematical arguments. At standard speed, my credits go a long way in the desktop app. The API rates also make it affordable for me to work through long proofs and reviews. See the [desktop credit rates](https://learn.chatgpt.com/docs/pricing#token-rates) and [API pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol#pricing).
+I chose the Sol 6.x series because I’ve found it strong at both developing proofs and spotting errors in mathematical arguments. At standard speed, my credits go a long way in the desktop app. The API rates also make it affordable for me to work through long proofs,reviews and even long terminal-coding tasks. See the [desktop credit rates](https://learn.chatgpt.com/docs/pricing#token-rates) and [API pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol#pricing).
 
 ## The three tools
 
