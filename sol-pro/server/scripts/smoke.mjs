@@ -15,12 +15,14 @@ async function rpc(method, params = {}, env = {}) {
 const originalFetch = globalThis.fetch;
 let sent;
 let overrideResponse = {};
+let previousModel = "gpt-6.2-sol";
+const sampleUsage = { input_tokens: 4, output_tokens: 6 };
 let previousTools = [{ type: "code_interpreter" }];
 let posts = 0;
 globalThis.fetch = async (url, options) => {
   if (options.method === "GET") {
     assert.equal(url, "https://api.openai.com/v1/responses/resp_test12345678");
-    return new Response(JSON.stringify({ id: "resp_test12345678", model: "gpt-6.1-sol", tools: previousTools }), { status: 200 });
+    return new Response(JSON.stringify({ id: "resp_test12345678", model: previousModel, tools: previousTools, usage: sampleUsage }), { status: 200 });
   }
   assert.equal(url, "https://api.openai.com/v1/responses");
   posts++;
@@ -28,9 +30,9 @@ globalThis.fetch = async (url, options) => {
   return new Response(JSON.stringify({
     id: "resp_test12345678",
     status: "completed",
-    model: "gpt-6.1-sol",
+    model: sent.model,
     output: [{ type: "message", content: [{ type: "output_text", text: "Checked result." }] }],
-    usage: { input_tokens: 4, output_tokens: 6 },
+    usage: sampleUsage,
     ...overrideResponse,
   }), { status: 200, headers: { "content-type": "application/json", "x-request-id": "req_test123" } });
 };
@@ -40,6 +42,7 @@ try {
   const listed = await rpc("tools/list");
   assert(listed.tools.some((tool) => tool.name === "sol_pro_start"));
   const capability = await rpc("tools/call", { name: "sol_pro_capabilities", arguments: {} });
+  assert.equal(capability.structuredContent.model, "gpt-6.2-sol");
   assert.equal(capability.structuredContent.api_key_configured, false);
   assert.equal(capability.structuredContent.execution_policy.default, "code_interpreter");
   const started = await rpc("tools/call", {
@@ -55,7 +58,7 @@ try {
   assert.equal(started.structuredContent.request_id, "req_test123");
   assert.equal(started.structuredContent.output_text, "Checked result.");
   assert.equal(started.structuredContent.pricing.estimated_model_usd, 0.000068);
-  assert.equal(sent.model, "gpt-6.1-sol");
+  assert.equal(sent.model, "gpt-6.2-sol");
   assert.deepEqual(sent.reasoning, { mode: "pro", effort: "max" });
   assert.equal(sent.store, true);
   assert(sent.tools.some((tool) => tool.type === "code_interpreter"));
@@ -86,10 +89,30 @@ try {
   assert.equal(badSkills.isError, true);
   assert.equal(posts, beforeReject);
   previousTools = shellTools;
-  const continuedShell = await rpc("tools/call", { name: "sol_pro_continue", arguments: { response_id: "resp_test12345678", outputs: [{ type: "computer_call_output", call_id: "call_123" }] } }, { OPENAI_API_KEY: "test-key" });
+  previousModel = "gpt-6.1-sol";
+  const testEnv = { OPENAI_API_KEY: "test-key" };
+  const responseId = "resp_test12345678";
+  const stored = await rpc("tools/call", { name: "sol_pro_get", arguments: { response_id: responseId } }, testEnv);
+  assert.equal(stored.structuredContent.model, previousModel);
+  assert.equal(stored.structuredContent.pricing.estimated_model_usd, 0.000068);
+  const followUp = {
+    name: "sol_pro_continue",
+    arguments: { response_id: responseId, outputs: [{ type: "computer_call_output", call_id: "call_123" }] },
+  };
+  const continuedShell = await rpc("tools/call", followUp, testEnv);
+  assert.equal(sent.previous_response_id, responseId);
+  assert.equal(sent.model, "gpt-6.2-sol");
+  assert.deepEqual(sent.reasoning, { mode: "pro", effort: "max" });
   assert.equal(continuedShell.structuredContent.execution_mode, "hosted_shell");
   assert(sent.tools.some((tool) => tool.type === "shell" && tool.environment.skills[0].skill_id === "skill_test"));
   assert(!sent.tools.some((tool) => tool.type === "code_interpreter"));
+  previousModel = "unrelated-model";
+  const beforeWrongModel = posts;
+  const wrongModel = await rpc("tools/call", followUp, testEnv);
+  assert.equal(wrongModel.isError, true);
+  assert.match(wrongModel.content[0].text, /model does not match/);
+  assert.equal(posts, beforeWrongModel);
+  previousModel = "gpt-6.2-sol";
   previousTools = [{ type: "code_interpreter" }];
   const badSwitch = await rpc("tools/call", { name: "sol_pro_continue", arguments: { response_id: "resp_test12345678", explicit_shell_request: "use shell", outputs: [{ type: "computer_call_output", call_id: "call_123" }] } }, { OPENAI_API_KEY: "test-key" });
   assert.equal(badSwitch.isError, true);
@@ -136,6 +159,7 @@ try {
     previousTools = sent.tools;
     const continued = await rpc("tools/call", { name: "sol_pro_continue", arguments: { response_id: "resp_test12345678", outputs: [{ type: "mcp_approval_response", approval_request_id: "mcpr_test", approve: true }] } }, mcpEnv);
     assert.equal(continued.structuredContent.execution_mode, mode);
+    assert.equal(sent.model, "gpt-6.2-sol");
     assert(sent.tools.some((tool) => tool.type === "file_search"));
     assert(sent.tools.some((tool) => tool.type === "mcp"));
     assert(!sent.tools.some((tool) => tool.type === (mode === "hosted_shell" ? "code_interpreter" : "shell")));

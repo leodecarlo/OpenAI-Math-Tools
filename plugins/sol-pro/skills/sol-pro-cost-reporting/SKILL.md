@@ -1,6 +1,6 @@
 ---
 name: sol-pro-cost-reporting
-description: "Use whenever Sol-Pro makes a GPT-6.1 Sol API call, so its cost is shown in the chat."
+description: "Use whenever Sol-Pro makes a GPT-6.2 Sol API call, so its cost is shown in the chat."
 ---
 
 # Report Sol-Pro call cost

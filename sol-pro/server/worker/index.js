@@ -1,6 +1,8 @@
-const MODEL = "gpt-6.1-sol";
+const MODEL = "gpt-6.2-sol";
+// Stored responses from both releases share the same standard short-context rates.
+const SUPPORTED_RESPONSE_MODELS = new Set([MODEL, "gpt-6.1-sol"]);
 const API = "https://api.openai.com/v1/responses";
-const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sol-Pro</title><style>body{font:16px system-ui,sans-serif;max-width:42rem;margin:12vh auto;padding:0 1.2rem;line-height:1.6;color:#1d2740}h1{font-size:2.2rem}</style></head><body><h1>Sol-Pro</h1><p>Private GPT-6.1 Sol Pro tool, using max reasoning effort.</p><p>Use the connected plugin in chat. It accepts selected skill instructions and material gathered from other plugins, and returns an API response ID for each call.</p><p>Code Interpreter is the default. An explicit hosted-shell request selects shell instead; both cannot be selected together.</p></body></html>`;
+const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sol-Pro</title><style>body{font:16px system-ui,sans-serif;max-width:42rem;margin:12vh auto;padding:0 1.2rem;line-height:1.6;color:#1d2740}h1{font-size:2.2rem}</style></head><body><h1>Sol-Pro</h1><p>Private GPT-6.2 Sol Pro tool, using max reasoning effort.</p><p>Use the connected plugin in chat. It accepts selected skill instructions and material gathered from other plugins, and returns an API response ID for each call.</p><p>Code Interpreter is the default. An explicit hosted-shell request selects shell instead; both cannot be selected together.</p></body></html>`;
 
 const item = (properties, required = []) => ({ type: "object", properties, required, additionalProperties: false });
 const str = { type: "string" };
@@ -16,7 +18,7 @@ const options = {
 };
 const tools = [
   { name: "sol_pro_capabilities", description: "Read the Sol-Pro model, tool policy, configured MCP names, and whether its private API key is ready. No model call.", inputSchema: item({}), annotations: { readOnlyHint: true } },
-  { name: "sol_pro_start", description: "Start GPT-6.1 Sol Pro/max. Supply selected skill instructions and relevant results from other plugins. Returns a response ID; use sol_pro_get to collect the answer. Code Interpreter is the default; set explicit_shell_request only for an explicit user request for hosted shell, which replaces Code Interpreter. Do not pass code_file_ids with shell.", inputSchema: item({ prompt: str, context: arr(contextItem), skills: arr(skillItem), ...options }, ["prompt"]), annotations: { readOnlyHint: false, openWorldHint: true } },
+  { name: "sol_pro_start", description: "Start GPT-6.2 Sol Pro/max. Supply selected skill instructions and relevant results from other plugins. Returns a response ID; use sol_pro_get to collect the answer. Code Interpreter is the default; set explicit_shell_request only for an explicit user request for hosted shell, which replaces Code Interpreter. Do not pass code_file_ids with shell.", inputSchema: item({ prompt: str, context: arr(contextItem), skills: arr(skillItem), ...options }, ["prompt"]), annotations: { readOnlyHint: false, openWorldHint: true } },
   { name: "sol_pro_get", description: "Retrieve an API response by ID, including answer, status, usage, estimated model token charge, observed tool calls, and any pending computer, patch, or MCP approval calls.", inputSchema: item({ response_id: str }, ["response_id"]), annotations: { readOnlyHint: true } },
   { name: "sol_pro_continue", description: "Continue an API response after the host has supplied actual computer screenshots, patch results, or MCP approval decisions. Preserves the execution mode of the previous response; returns a new response ID.", inputSchema: item({ response_id: str, outputs: arr({ type: "object" }), ...options }, ["response_id", "outputs"]), annotations: { readOnlyHint: false, openWorldHint: true } },
 ];
@@ -128,7 +130,7 @@ function summary(data, requestId, selectedMode = null, requestedTools = null) {
   const writeTokens = usage?.input_tokens_details?.cache_write_tokens || 0;
   const outputTokens = usage?.output_tokens;
   const ordinaryTokens = inputTokens - cachedTokens - writeTokens;
-  const canEstimate = data.model === MODEL && [undefined, null, "default", "standard"].includes(data.service_tier) &&
+  const canEstimate = SUPPORTED_RESPONSE_MODELS.has(data.model) && [undefined, null, "default", "standard"].includes(data.service_tier) &&
     [inputTokens, cachedTokens, writeTokens, outputTokens, ordinaryTokens].every((n) => Number.isInteger(n) && n >= 0) && inputTokens <= 272000;
   const estimatedModelCost = canEstimate ? Number(((ordinaryTokens * 2 + cachedTokens * 0.1 + writeTokens * 2.5 + outputTokens * 10) / 1000000).toFixed(6)) : null;
   const codeCalls = items.filter((x) => x.type === "code_interpreter_call");
@@ -142,7 +144,7 @@ function summary(data, requestId, selectedMode = null, requestedTools = null) {
     output_text: answer, pending_calls: pending, image_count: images.length, usage,
     pricing: {
       estimated_model_usd: estimatedModelCost,
-      rate_date: "2026-11-11", rate_basis: "standard USD per million tokens: input 2, cached 0.10, 30-minute cache write 2.50, output 10",
+      rate_date: "2026-11-19", rate_basis: "standard USD per million tokens: input 2, cached 0.10, 30-minute cache write 2.50, output 10",
       note: "Estimate only; excludes container and other tool charges. The Platform billing record is authoritative.",
     },
     observed_tool_usage: {
@@ -201,7 +203,7 @@ async function call(name, args, env, request) {
     })) fail("Supply actual computer or patch outputs with call IDs, or MCP decisions with approval request IDs");
     const id = responseId(args.response_id);
     const { data: previous } = await openai(env, "GET", "/" + encodeURIComponent(id));
-    if (previous.model !== MODEL) fail("Previous response model does not match Sol-Pro");
+    if (!SUPPORTED_RESPONSE_MODELS.has(previous.model)) fail("Previous response model does not match Sol-Pro");
     const mode = executionMode(previous.tools);
     if (!mode) fail("Cannot determine the previous response execution mode; start a new response");
     if (requestedShell(args) && mode !== "hosted_shell") fail("Cannot switch execution mode in a continuation; start a new response for hosted shell");

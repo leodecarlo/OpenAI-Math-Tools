@@ -1,6 +1,6 @@
 ---
 name: sol-rev
-description: "Coordinate proofs and numerical-method implementation checks with separate GPT-6.1 Sol agents for computational checking and independent review. Proof reviews also use a neuro-symbolic verifier."
+description: "Coordinate proofs and numerical-method implementation checks with separate GPT-6.2 Sol agents for computational checking and independent review. Proof reviews also use a neuro-symbolic verifier."
 ---
 
 # Sol_rev
@@ -11,7 +11,7 @@ Apply this coordination layer to the user's mathematical task. Preserve the supp
 
 Use the current chat model as the Main agent, leading the proof or implementation review. Follow the same instructions regardless of its model identity, and disclose that identity.
 
-Delegate to three separate GPT-6.1 Sol agents for proofs and two for numerical-method implementation checks.
+Delegate to three separate GPT-6.2 Sol agents for proofs and two for numerical-method implementation checks.
 
 For proofs:
 
@@ -38,7 +38,7 @@ Report the model and reasoning setting actually requested for each agent. If the
 
 ## Apply the model assignments honestly
 
-- Report the current chat model's verified identity, or say when it cannot be verified. Explicitly request `gpt-6.1-sol` for each reviewer. This skill cannot change the current chat's model.
+- Report the current chat model's verified identity, or say when it cannot be verified. Explicitly request `gpt-6.2-sol` for each reviewer. This skill cannot change the current chat's model.
 - Use the user's explicitly requested reasoning settings. Otherwise retain the host's resolved defaults; this skill imposes no Max or Ultra setting. Report a missing effort override as `default (no explicit override requested)`, rather than inventing an effective setting. Distinguish requested settings from any effective settings that the host actually reports.
 - Use a distinct assisting agent for each listed role. If the host requires fresh context for model overrides, start fresh agents with explicit model settings and supply the complete bounded review packet. Do not silently fall back to agents inheriting the Main agent's model, another Sol version, another reasoning setting, or self-review. Explain unavailable capabilities before any substitution.
 - Include only sources actually accessible to each agent. Identify the version under review and give each agent a separate report destination when using files. Obtain independent initial reports before sharing objections. Recheck changed steps against the revised version.

@@ -13,4 +13,6 @@ For mathematical algorithms or code, read and apply the [computational standards
 
 Assess difficulty and possible nontrivial uncertainty at the start and as work develops. For a hard or uncertain proof, automatically use the [proof verification team](references/coordinated-proof-verification.md). For a hard or uncertain mathematical implementation, automatically use the [implementation and verification team](references/coordinated-computational-verification.md). Each qualifying proof or implementation retains its own team; routine supporting algebra does not itself require a proof team.
 
+The current chat model leads the work. Unless the user specifies another model, explicitly request GPT-6.2 Sol (`gpt-6.2-sol`) for each delegated proof or implementation role.
+
 Use distinct agents for the specified roles when available, staging them if capacity is limited. If independent roles are unavailable, identify the missing coverage and label self-review accurately. Routine tasks do not automatically require these teams.

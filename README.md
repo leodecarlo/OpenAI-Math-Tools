@@ -1,14 +1,18 @@
 # OpenAI Math Tools
 
-Two skills for mathematical work, plus Sol_6.1-Pro's plugin.
+Two skills for mathematical work and a plugin for delegating proof and review tasks to GPT-6.2 Sol.
+
+## Why Sol 6.x?
+
+I chose the Sol 6.x series because I’ve found it strong at both developing proofs and spotting errors in mathematical arguments. At standard speed, my credits go a long way in the desktop app. The API rates also make it affordable for me to work through long proofs and reviews. See the [desktop credit rates](https://learn.chatgpt.com/docs/pricing#token-rates) and [API pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol#pricing).
 
 ## The three tools
 
-**[General Math Helper](skills/general-math-helper/)** sets standards for proofs, research, algorithms, and scientific code. Its philosophy is to make assumptions and derivations checkable, preserve the problem as stated, and match verification to uncertainty. Code should be readable, maintainable, stable, and efficient; convergence claims need justification. Hard or uncertain work calls for independent reviewers. Routine work stays lighter.
+**[General Math Helper](skills/general-math-helper/)** sets standards for proofs, research, algorithms, and scientific code. Its philosophy is to make assumptions and derivations checkable, preserve the problem as stated, and match verification to uncertainty. Code should be readable, maintainable, stable, and efficient; convergence claims need justification. For hard or uncertain work, it delegates to independent GPT-6.2 Sol agents by default. Routine work stays lighter.
 
-**[Sol_rev](skills/sol-rev/)** keeps the current chat model as the Main agent and assigns two separate GPT-6.1 Sol agents to computational checking and mathematical or implementation review. Proof reviews add a third Sol agent for neuro-symbolic verification. Reviewers first work independently on a fixed proof or code version. They can ask for clarification; unclear objections receive constructive question-and-answer exchanges. The Main agent resolves objections, repairs the proof or implementation, and requests fresh review of changed steps. Any additional review roles remain required.
+**[Sol_rev](skills/sol-rev/)** keeps the current chat model as the Main agent and assigns two separate GPT-6.2 Sol agents to computational checking and mathematical or implementation review. Proof reviews add a third Sol agent for neuro-symbolic verification. Reviewers first work independently on a fixed proof or code version. They can ask for clarification; unclear objections receive constructive question-and-answer exchanges. The Main agent resolves objections, repairs the proof or implementation, and requests fresh review of changed steps. Any additional review roles remain required.
 
-**[Sol-Pro](plugins/sol-pro/)** connects a chat to a service requesting GPT-6.1 Sol in Pro mode with max reasoning effort. Its philosophy is explicit delegation: pass the work and instructions, use tools when needed, and record the response IDs and estimated costs. The [server source](sol-pro/server/) shows how calls are made.
+**[Sol-Pro](plugins/sol-pro/)** connects a chat to a service requesting GPT-6.2 Sol in Pro mode with max reasoning effort. Its philosophy is explicit delegation: pass the work and instructions, use tools when needed, and record the response IDs and estimated costs. The [server source](sol-pro/server/) shows how calls are made.
 
 
 ### Use them together

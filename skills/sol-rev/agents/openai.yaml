@@ -1,7 +1,7 @@
 interface:
   display_name: "Sol_rev"
   short_description: "Proofs with separate Sol checking and review"
-  default_prompt: "Use $sol-rev to coordinate this proof with separate GPT-6.1 Sol agents for computational checking, mathematical review, and neuro-symbolic verification."
+  default_prompt: "Use $sol-rev to coordinate this proof with separate GPT-6.2 Sol agents for computational checking, mathematical review, and neuro-symbolic verification."
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#1E3A5F"
