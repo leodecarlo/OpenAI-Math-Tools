@@ -1,6 +1,4 @@
 const MODEL = "gpt-6.2-sol";
-// Stored responses from both releases share the same standard short-context rates.
-const SUPPORTED_RESPONSE_MODELS = new Set([MODEL, "gpt-6.1-sol"]);
 const API = "https://api.openai.com/v1/responses";
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sol-Pro</title><style>body{font:16px system-ui,sans-serif;max-width:42rem;margin:12vh auto;padding:0 1.2rem;line-height:1.6;color:#1d2740}h1{font-size:2.2rem}</style></head><body><h1>Sol-Pro</h1><p>Private GPT-6.2 Sol Pro tool, using max reasoning effort.</p><p>Use the connected plugin in chat. It accepts selected skill instructions and material gathered from other plugins, and returns an API response ID for each call.</p><p>Code Interpreter is the default. An explicit hosted-shell request selects shell instead; both cannot be selected together.</p></body></html>`;
 
@@ -130,7 +128,7 @@ function summary(data, requestId, selectedMode = null, requestedTools = null) {
   const writeTokens = usage?.input_tokens_details?.cache_write_tokens || 0;
   const outputTokens = usage?.output_tokens;
   const ordinaryTokens = inputTokens - cachedTokens - writeTokens;
-  const canEstimate = SUPPORTED_RESPONSE_MODELS.has(data.model) && [undefined, null, "default", "standard"].includes(data.service_tier) &&
+  const canEstimate = data.model === MODEL && [undefined, null, "default", "standard"].includes(data.service_tier) &&
     [inputTokens, cachedTokens, writeTokens, outputTokens, ordinaryTokens].every((n) => Number.isInteger(n) && n >= 0) && inputTokens <= 272000;
   const estimatedModelCost = canEstimate ? Number(((ordinaryTokens * 2 + cachedTokens * 0.1 + writeTokens * 2.5 + outputTokens * 10) / 1000000).toFixed(6)) : null;
   const codeCalls = items.filter((x) => x.type === "code_interpreter_call");
@@ -191,6 +189,7 @@ async function call(name, args, env, request) {
   }
   if (name === "sol_pro_get") {
     const { data, request_id } = await openai(env, "GET", "/" + encodeURIComponent(responseId(args.response_id)));
+    if (data.model !== MODEL) fail("Response model does not match Sol-Pro");
     const s = summary(data, request_id); return result(s.data, s.images);
   }
   if (name === "sol_pro_continue") {
@@ -203,7 +202,7 @@ async function call(name, args, env, request) {
     })) fail("Supply actual computer or patch outputs with call IDs, or MCP decisions with approval request IDs");
     const id = responseId(args.response_id);
     const { data: previous } = await openai(env, "GET", "/" + encodeURIComponent(id));
-    if (!SUPPORTED_RESPONSE_MODELS.has(previous.model)) fail("Previous response model does not match Sol-Pro");
+    if (previous.model !== MODEL) fail("Previous response model does not match Sol-Pro");
     const mode = executionMode(previous.tools);
     if (!mode) fail("Cannot determine the previous response execution mode; start a new response");
     if (requestedShell(args) && mode !== "hosted_shell") fail("Cannot switch execution mode in a continuation; start a new response for hosted shell");

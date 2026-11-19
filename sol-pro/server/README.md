@@ -1,6 +1,6 @@
 # Sol-Pro server
 
-Sol-Pro delegates work to GPT-6.2 Sol in Pro mode with max reasoning effort. You can retrieve a saved GPT-6.1 Sol response by its original ID. If it has a pending tool call, Sol-Pro sends your follow-up to GPT-6.2 Sol.
+Sol-Pro delegates work to GPT-6.2 Sol in Pro mode with max reasoning effort.
 
 ## Use Sol-Pro
 

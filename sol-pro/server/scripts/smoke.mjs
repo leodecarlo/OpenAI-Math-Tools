@@ -89,10 +89,10 @@ try {
   assert.equal(badSkills.isError, true);
   assert.equal(posts, beforeReject);
   previousTools = shellTools;
-  previousModel = "gpt-6.1-sol";
   const testEnv = { OPENAI_API_KEY: "test-key" };
   const responseId = "resp_test12345678";
-  const stored = await rpc("tools/call", { name: "sol_pro_get", arguments: { response_id: responseId } }, testEnv);
+  const getResponse = { name: "sol_pro_get", arguments: { response_id: responseId } };
+  const stored = await rpc("tools/call", getResponse, testEnv);
   assert.equal(stored.structuredContent.model, previousModel);
   assert.equal(stored.structuredContent.pricing.estimated_model_usd, 0.000068);
   const followUp = {
@@ -108,9 +108,11 @@ try {
   assert(!sent.tools.some((tool) => tool.type === "code_interpreter"));
   previousModel = "unrelated-model";
   const beforeWrongModel = posts;
-  const wrongModel = await rpc("tools/call", followUp, testEnv);
-  assert.equal(wrongModel.isError, true);
-  assert.match(wrongModel.content[0].text, /model does not match/);
+  for (const request of [getResponse, followUp]) {
+    const wrongModel = await rpc("tools/call", request, testEnv);
+    assert.equal(wrongModel.isError, true);
+    assert.match(wrongModel.content[0].text, /model does not match/);
+  }
   assert.equal(posts, beforeWrongModel);
   previousModel = "gpt-6.2-sol";
   previousTools = [{ type: "code_interpreter" }];

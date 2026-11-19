@@ -60,3 +60,7 @@ Once installed, type `$` for a skill or `@` for a plugin, then select its name f
 Add your request after selecting them. You can combine skills and plugins in the same message:
 
 > `$general-math-helper $sol-rev @Sol-Pro` Use these skills and delegate the following proof or review to Sol-Pro: …
+
+## Future Sol 6.x releases
+
+When OpenAI releases a newer Sol 6.x model, replace GPT-6.2 Sol and its model ID (`gpt-6.2-sol`) with the new version in both skills and in Sol-Pro. Update your installed copies and redeploy your Sol-Pro server so it uses the new model.
